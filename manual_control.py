@@ -20,9 +20,11 @@ parser.add_argument('--env-name', default='MiniWorld-Hallway-v0')
 parser.add_argument('--domain-rand', action='store_true', help='enable domain randomization')
 parser.add_argument('--no-time-limit', action='store_true', help='ignore time step limits')
 parser.add_argument('--top_view', action='store_true', help='show the top view instead of the agent view')
+parser.add_argument('--save_to', type=str, help='where to save maze map', default=None)
+parser.add_argument('--load_from', type=str, help='where to load maze map from', default=None)
 args = parser.parse_args()
 
-env = gym.make(args.env_name)
+env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from)
 
 if args.no_time_limit:
     env.max_episode_steps = math.inf
