@@ -20,6 +20,7 @@ class Maze(MiniWorldEnv):
         max_episode_steps=None,
         load_from=None,
         save_to=None,
+            base_punishment = 0,
         **kwargs
     ):
         self.num_rows = num_rows
@@ -28,6 +29,7 @@ class Maze(MiniWorldEnv):
         self.gap_size = 0.25
         self.load_from = load_from
         self.save_to = save_to
+        self.base_punishment = base_punishment
 
         super().__init__(
             max_episode_steps = max_episode_steps or num_rows * num_cols * 24,
@@ -149,6 +151,8 @@ class Maze(MiniWorldEnv):
         if self.near(self.box):
             reward += self._reward()
             done = True
+
+        reward += self.base_punishment
 
         return obs, reward, done, info
 
