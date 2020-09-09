@@ -50,7 +50,6 @@ def step(action):
         env.reset()
 
     if do_render:
-        print("RENDERING")
         env.render('pyglet', view=view_mode)
 
 @env.unwrapped.window.event
