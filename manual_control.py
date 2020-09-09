@@ -22,9 +22,10 @@ parser.add_argument('--no-time-limit', action='store_true', help='ignore time st
 parser.add_argument('--top_view', action='store_true', help='show the top view instead of the agent view')
 parser.add_argument('--save_to', type=str, help='where to save maze map', default=None)
 parser.add_argument('--load_from', type=str, help='where to load maze map from', default=None)
+parser.add_argument('--domain_rand', type=lambda x : x.lower()=='true', help='Set to true to use stockastic world', default=False)
 args = parser.parse_args()
 
-env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from)
+env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from, domain_rand=args.domain_rand)
 
 if args.no_time_limit:
     env.max_episode_steps = math.inf
