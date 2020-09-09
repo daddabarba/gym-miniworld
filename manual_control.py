@@ -17,7 +17,6 @@ import gym_miniworld
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--env-name', default='MiniWorld-Maze-v0')
-parser.add_argument('--no-time-limit', action='store_true', help='ignore time step limits')
 parser.add_argument('--top_view', action='store_true', help='show the top view instead of the agent view')
 parser.add_argument('--save_to', type=str, help='where to save maze map', default=None)
 parser.add_argument('--load_from', type=str, help='where to load maze map from', default=None)
@@ -27,8 +26,7 @@ args = parser.parse_args()
 
 env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from, domain_rand=args.domain_rand, base_punishment=args.base_punishment)
 
-if args.no_time_limit:
-    env.max_episode_steps = math.inf
+env.max_episode_steps = math.inf
 
 view_mode = 'top' if args.top_view else 'agent'
 do_render = True
