@@ -14,13 +14,14 @@ class Maze(MiniWorldEnv):
 
     def __init__(
         self,
-        num_rows=8,
-        num_cols=8,
+        num_rows=10,
+        num_cols=10,
         room_size=3,
         max_episode_steps=None,
         load_from=None,
         save_to=None,
         base_punishment = 0,
+        reward_pos = None,
         **kwargs
     ):
         self.num_rows = num_rows
@@ -30,6 +31,7 @@ class Maze(MiniWorldEnv):
         self.load_from = load_from
         self.save_to = save_to
         self.base_punishment = base_punishment
+        self.reward_pos = reward_pos
 
         super().__init__(
             max_episode_steps = max_episode_steps or num_rows * num_cols * 24,
@@ -128,6 +130,9 @@ class Maze(MiniWorldEnv):
         visit(0, 0)
 
         self.box = self.place_entity(Box(color='red'))
+
+        if self.reward_pos is not None:
+            self.box.pos = np.array([self.reward_pos[0],  0.        , self.reward_pos[1]])
 
         self.place_agent()
 
