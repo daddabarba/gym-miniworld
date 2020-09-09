@@ -30,6 +30,7 @@ if args.no_time_limit:
     env.max_episode_steps = math.inf
 
 view_mode = 'top' if args.top_view else 'agent'
+do_render = True
 
 env.reset()
 
@@ -48,7 +49,9 @@ def step(action):
         print('done!')
         env.reset()
 
-    env.render('pyglet', view=view_mode)
+    if do_render:
+        print("RENDERING")
+        env.render('pyglet', view=view_mode)
 
 @env.unwrapped.window.event
 def on_key_press(symbol, modifiers):
@@ -58,6 +61,7 @@ def on_key_press(symbol, modifiers):
     """
 
     global view_mode
+    global do_render
 
     if symbol == key.BACKSPACE or symbol == key.SLASH:
         print('RESET')
@@ -90,13 +94,17 @@ def on_key_press(symbol, modifiers):
     elif symbol == key.V:
         view_mode = 'top' if view_mode=='agent' else 'agent'
 
+    elif symbol == key.R:
+        do_render = not do_render
+
 @env.unwrapped.window.event
 def on_key_release(symbol, modifiers):
     pass
 
 @env.unwrapped.window.event
 def on_draw():
-    env.render('pyglet', view=view_mode)
+    if do_render:
+        env.render('pyglet', view=view_mode)
 
 @env.unwrapped.window.event
 def on_close():
