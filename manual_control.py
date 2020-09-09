@@ -16,8 +16,7 @@ import gym
 import gym_miniworld
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--env-name', default='MiniWorld-Hallway-v0')
-parser.add_argument('--domain-rand', action='store_true', help='enable domain randomization')
+parser.add_argument('--env-name', default='MiniWorld-Maze-v0')
 parser.add_argument('--no-time-limit', action='store_true', help='ignore time step limits')
 parser.add_argument('--top_view', action='store_true', help='show the top view instead of the agent view')
 parser.add_argument('--save_to', type=str, help='where to save maze map', default=None)
@@ -29,8 +28,6 @@ env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from, do
 
 if args.no_time_limit:
     env.max_episode_steps = math.inf
-if args.domain_rand:
-    env.domain_rand = True
 
 view_mode = 'top' if args.top_view else 'agent'
 
@@ -60,6 +57,8 @@ def on_key_press(symbol, modifiers):
     control the simulation
     """
 
+    global view_mode
+
     if symbol == key.BACKSPACE or symbol == key.SLASH:
         print('RESET')
         env.reset()
@@ -87,6 +86,9 @@ def on_key_press(symbol, modifiers):
 
     elif symbol == key.ENTER:
         step(env.actions.done)
+
+    elif symbol == key.V:
+        view_mode = 'top' if view_mode=='agent' else 'agent'
 
 @env.unwrapped.window.event
 def on_key_release(symbol, modifiers):
