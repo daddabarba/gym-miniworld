@@ -14,8 +14,8 @@ class Maze(MiniWorldEnv):
 
     def __init__(
         self,
-        num_rows=10,
-        num_cols=10,
+        num_rows=5,
+        num_cols=5,
         room_size=3,
         max_episode_steps=None,
         load_from=None,
