@@ -21,10 +21,11 @@ parser.add_argument('--top_view', action='store_true', help='show the top view i
 parser.add_argument('--save_to', type=str, help='where to save maze map', default=None)
 parser.add_argument('--load_from', type=str, help='where to load maze map from', default=None)
 parser.add_argument('--domain_rand', type=lambda x : x.lower()=='true', help='Set to true to use stockastic world', default=False)
-parser.add_argument('--base_punishment', type=float, help='Base reward at each time-step', default=-0.1)
+parser.add_argument('--size', nargs=2, type=int, help='HxW of maze', default=(5,5))
+parser.add_argument('--base_punishment', type=float, help='Base reward at each time-step', default=-1)
 args = parser.parse_args()
 
-env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from, domain_rand=args.domain_rand, base_punishment=args.base_punishment)
+env = gym.make(args.env_name, save_to=args.save_to, load_from=args.load_from, domain_rand=args.domain_rand, base_punishment=args.base_punishment, num_rows=args.size[0], num_cols=args.size[1])
 
 env.max_episode_steps = math.inf
 

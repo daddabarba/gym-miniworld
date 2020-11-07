@@ -20,7 +20,7 @@ class Maze(MiniWorldEnv):
         max_episode_steps=None,
         load_from=None,
         save_to=None,
-        base_punishment = 0,
+        base_punishment = -1,
         reward_pos = None,
         **kwargs
     ):
