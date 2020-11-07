@@ -34,7 +34,7 @@ class Maze(MiniWorldEnv):
         self.reward_pos = reward_pos
 
         super().__init__(
-            max_episode_steps = max_episode_steps or num_rows * num_cols * 24,
+            max_episode_steps = max_episode_steps,
             **kwargs
         )
 

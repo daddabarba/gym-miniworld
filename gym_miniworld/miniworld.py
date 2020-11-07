@@ -480,7 +480,7 @@ class MiniWorldEnv(gym.Env):
         self.reward_range = (-math.inf, math.inf)
 
         # Maximum number of steps per episode
-        self.max_episode_steps = max_episode_steps
+        self.max_episode_steps = max_episode_steps if max_episode_steps is not None else math.inf
 
         # Simulation parameters, used for domain randomization
         self.params = params
