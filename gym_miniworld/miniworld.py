@@ -522,6 +522,14 @@ class MiniWorldEnv(gym.Env):
         self.seed()
         self.init_world()
 
+    @property
+    def ns(self):
+        return self.observation_space.shape
+
+    @property
+    def na(self):
+        return self.action_space.n
+
     def close(self):
         pass
 

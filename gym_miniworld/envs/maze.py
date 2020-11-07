@@ -39,7 +39,7 @@ class Maze(MiniWorldEnv):
         )
 
         # Allow only the movement actions
-        self.action_space = spaces.Discrete(self.actions.move_forward+1)
+        self.action_space = spaces.Discrete(self.actions.move_forward+2)
 
     def _gen_world(self):
         rows = []
