@@ -548,7 +548,7 @@ class MiniWorldEnv(gym.Env):
         obs = self.render_obs()
 
         # Return first observation
-        return obs
+        return obs, {}
 
     def init_world(self):
         """
