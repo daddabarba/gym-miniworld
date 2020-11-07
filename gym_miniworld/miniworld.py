@@ -520,7 +520,7 @@ class MiniWorldEnv(gym.Env):
 
         # Initialize the state
         self.seed()
-        self.reset()
+        self.init_world()
 
     def close(self):
         pass
@@ -530,6 +530,19 @@ class MiniWorldEnv(gym.Env):
         return [seed]
 
     def reset(self):
+
+        # Step count since episode start
+        self.step_count = 0
+
+        self.place_agent()
+
+        # Generate the first camera image
+        obs = self.render_obs()
+
+        # Return first observation
+        return obs
+
+    def init_world(self):
         """
         Reset the simulation at the start of a new episode
         This also randomizes many environment parameters (domain randomization)
@@ -584,12 +597,6 @@ class MiniWorldEnv(gym.Env):
 
         # Pre-compile static parts of the environment into a display list
         self._render_static()
-
-        # Generate the first camera image
-        obs = self.render_obs()
-
-        # Return first observation
-        return obs
 
     def _get_carry_pos(self, agent_pos, ent):
         """
