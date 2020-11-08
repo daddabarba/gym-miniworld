@@ -42,6 +42,29 @@ class Maze(MiniWorldEnv):
         self.action_space = spaces.Discrete(self.actions.move_forward+2)
 
     def _gen_world(self):
+
+        neighborhood = {}
+
+        if self.load_from is not None:
+            with open(self.load_from, 'rt') as f:
+
+                loaded_data = json.load(f)
+
+            neighborhood = dict(map(
+                lambda x : (
+                    tuple(map(
+                        lambda x : int(x),
+                        x[0][1:-1].split(','),
+                    )),
+                    x[1],
+                ),
+                loaded_data['map'].items()
+            ))
+
+            self.reward_pos = self.room_size*np.array(loaded_data['goal']) + self.room_size/2
+
+            self.num_rows, self.num_cols = loaded_data['size']
+
         rows = []
 
         # For each row
@@ -70,21 +93,6 @@ class Maze(MiniWorldEnv):
             rows.append(row)
 
         visited = set()
-
-        neighborhood = {}
-
-        if self.load_from is not None:
-            with open(self.load_from, 'rt') as f:
-                neighborhood = dict(map(
-                    lambda x : (
-                        tuple(map(
-                            lambda x : int(x),
-                            x[0][1:-1].split(','),
-                        )),
-                        x[1],
-                    ),
-                    json.load(f).items(),
-                ))
 
         def visit(i, j):
             """
@@ -138,15 +146,20 @@ class Maze(MiniWorldEnv):
 
         if self.save_to is not None:
             print(f"Saving map to {self.save_to}")
+
             with open(self.save_to, 'wt') as f:
                 json.dump(
-                    dict(map(
-                        lambda x : (
-                            str(x[0]),
-                            x[1],
-                        ),
-                        neighborhood.items()
-                    )),
+                    dict(
+                        goal = (self.box.pos[0]//self.room_size, self.box.pos[-1]//self.room_size),
+                        size = (self.num_rows, self.num_cols),
+                        map = dict(map(
+                            lambda x : (
+                                str(x[0]),
+                                x[1],
+                            ),
+                            neighborhood.items()
+                        )),
+                    ),
                     f,
                 )
 
